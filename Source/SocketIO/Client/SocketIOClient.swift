@@ -110,13 +110,11 @@ open class SocketIOClient: NSObject, SocketIOClientSpec {
     /// Only call after adding your event listeners, unless you know what you're doing.
     ///
     /// - parameter withPayload: An optional payload sent on connect
-    open func connect(withPayload payload: [String: Any]? = nil) {
+    @objc open func connect(withPayload payload: [String: Any]? = nil) {
         connect(withPayload: payload, timeoutAfter: 0, withHandler: nil)
     }
 
-    @objc open func connect() {
-		connect(nil)
-	}
+    
     /// Connect to the server. If we aren't connected after `timeoutAfter` seconds, then `withHandler` is called.
     ///
     /// Only call after adding your event listeners, unless you know what you're doing.
