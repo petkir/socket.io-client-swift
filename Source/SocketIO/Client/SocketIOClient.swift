@@ -114,6 +114,9 @@ open class SocketIOClient: NSObject, SocketIOClientSpec {
         connect(withPayload: payload, timeoutAfter: 0, withHandler: nil)
     }
 
+    @objc open func connect() {
+		connect(withPayload:nil)
+	}
     
     /// Connect to the server. If we aren't connected after `timeoutAfter` seconds, then `withHandler` is called.
     ///
