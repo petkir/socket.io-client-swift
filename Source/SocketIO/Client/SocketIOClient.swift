@@ -114,6 +114,9 @@ open class SocketIOClient: NSObject, SocketIOClientSpec {
         connect(withPayload: payload, timeoutAfter: 0, withHandler: nil)
     }
 
+    @objc open func connect() {
+		connect(nil)
+	}
     /// Connect to the server. If we aren't connected after `timeoutAfter` seconds, then `withHandler` is called.
     ///
     /// Only call after adding your event listeners, unless you know what you're doing.
@@ -214,7 +217,9 @@ open class SocketIOClient: NSObject, SocketIOClientSpec {
     open func emit(_ event: String, _ items: SocketData..., completion: (() -> ())? = nil)  {
         emit(event, with: items, completion: completion)
     }
-    
+     @objc open func emit(_ event: String, with items: Any)  {
+        emit(event, with: items as! [SocketData], completion: nil)
+    }
     /// Send an event to the server, with optional data items and optional write completion handler.
     ///
     /// If an error occurs trying to transform `items` into their socket representation, a `SocketClientEvent.error`
@@ -441,6 +446,7 @@ open class SocketIOClient: NSObject, SocketIOClientSpec {
     /// - parameter callback: The callback that will execute when this event is received.
     /// - returns: A unique id for the handler that can be used to remove it.
     @discardableResult
+    @objc    
     open func on(_ event: String, callback: @escaping NormalCallback) -> UUID {
         DefaultSocketLogger.Logger.log("Adding handler for event: \(event)", type: logType)
 
