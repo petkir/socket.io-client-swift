@@ -82,6 +82,7 @@ public protocol SocketManagerSpec : SocketEngineClient {
     var socketURL: URL { get }
 
     /// The status of this manager.
+    
     var status: SocketIOStatus { get }
 
     /// The version of socket.io in use.

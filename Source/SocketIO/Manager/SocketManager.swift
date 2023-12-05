@@ -107,6 +107,7 @@ open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDat
     public var randomizationFactor = 0.5
 
     /// The status of this manager.
+    @objc
     public private(set) var status: SocketIOStatus = .notConnected {
         didSet {
             switch status {
@@ -118,6 +119,7 @@ open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDat
             }
         }
     }
+   
 
     public private(set) var version = SocketIOVersion.three
 
@@ -250,18 +252,24 @@ open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDat
     /// releasing.
     ///
     /// - parameter socket: The socket to disconnect.
+    @objc
     open func disconnectSocket(_ socket: SocketIOClient) {
         engine?.send("1\(socket.nsp),", withData: [])
 
         socket.didDisconnect(reason: "Namespace leave")
     }
-
+    @objc
+    open func getStatus() -> SocketIOStatus {
+        return status
+    }
+ 
     /// Disconnects the socket associated with `forNamespace`.
     ///
     /// This will remove the socket for the manager's control, and make the socket instance useless and ready for
     /// releasing.
     ///
     /// - parameter nsp: The namespace to disconnect from.
+  
     open func disconnectSocket(forNamespace nsp: String) {
         guard let socket = nsps.removeValue(forKey: nsp) else {
             DefaultSocketLogger.Logger.log("Could not find socket for \(nsp) to disconnect",
@@ -272,6 +280,7 @@ open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDat
 
         disconnectSocket(socket)
     }
+   
 
     /// Sends a client event to all sockets in `nsps`
     ///
@@ -483,6 +492,7 @@ open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDat
     ///
     /// - parameter socket: The socket to remove.
     /// - returns: The socket removed, if it was owned by the manager.
+    @objc
     @discardableResult
     open func removeSocket(_ socket: SocketIOClient) -> SocketIOClient? {
         return nsps.removeValue(forKey: socket.nsp)
