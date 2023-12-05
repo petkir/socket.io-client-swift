@@ -141,6 +141,7 @@ open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDat
     ///
     /// - parameter socketURL: The url of the socket.io server.
     /// - parameter config: The config for this socket.
+    @objc
     public init(socketURL: URL, config: SocketIOClientConfiguration = []) {
         self._config = config
         self.socketURL = socketURL
