@@ -49,15 +49,13 @@ open class SocketIOClient: NSObject, SocketIOClientSpec {
     public let nsp: String
 
     /// A handler that will be called on any event.
-    @objc
     public private(set) var anyHandler: ((SocketAnyEvent) -> ())?
 
     /// The array of handlers for this socket.
-    @objc
+    
     public private(set) var handlers = [SocketEventHandler]()
 
     /// The manager for this socket.
-    @objc
     public private(set) weak var manager: SocketManagerSpec?
 
     /// A view into this socket where emits do not check for binary data.
@@ -97,7 +95,7 @@ open class SocketIOClient: NSObject, SocketIOClientSpec {
     ///
     /// - parameter manager: The manager for this socket.
     /// - parameter nsp: The namespace of the socket.
-    @objc
+   
     public init(manager: SocketManagerSpec, nsp: String) {
         self.manager = manager
         self.nsp = nsp
@@ -278,6 +276,10 @@ open class SocketIOClient: NSObject, SocketIOClientSpec {
     open func emitWithAck(_ event: String, _ items: SocketData...) -> OnAckCallback {
         emitWithAck(event, with: items)
     }
+    @objc
+    open func emitWithAck(_ event: String, with items: [Any]) -> OnAckCallback {
+        return createOnAck([event] + items)
+    }
     
     /// Sends a message to the server, requesting an ack.
     ///
@@ -298,7 +300,7 @@ open class SocketIOClient: NSObject, SocketIOClientSpec {
     /// - parameter event: The event to send.
     /// - parameter items: The items to send with this event. May be left out.
     /// - returns: An `OnAckCallback`. You must call the `timingOut(after:)` method before the event will be sent.
-    @objc
+    
     open func emitWithAck(_ event: String, with items: [SocketData]) -> OnAckCallback {
         
         do {
