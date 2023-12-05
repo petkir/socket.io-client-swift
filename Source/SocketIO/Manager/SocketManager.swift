@@ -141,7 +141,7 @@ open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDat
     ///
     /// - parameter socketURL: The url of the socket.io server.
     /// - parameter config: The config for this socket.
-    @objc
+ 
     public init(socketURL: URL, config: SocketIOClientConfiguration = []) {
         self._config = config
         self.socketURL = socketURL
@@ -297,6 +297,10 @@ open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDat
         forAll {socket in
             socket.emit([event] + emitData)
         }
+    }
+    @objc
+    func emitAll(_ event: String, withItems items: [Any]){
+        emitAll( event, items )
     }
 
     /// Called when the engine closes.

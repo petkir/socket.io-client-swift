@@ -45,7 +45,7 @@ import Foundation
 /// To disconnect a socket and remove it from the manager, either call `SocketIOClient.disconnect()` on the socket,
 /// or call one of the `disconnectSocket` methods on this class.
 ///
-@objc
+
 public protocol SocketManagerSpec : SocketEngineClient {
     // MARK: Properties
 
@@ -121,6 +121,8 @@ public protocol SocketManagerSpec : SocketEngineClient {
     /// - parameter event: The event to send.
     /// - parameter items: The data to send with this event.
     func emitAll(_ event: String, _ items: SocketData...)
+    
+   
 
     /// Tries to reconnect to the server.
     ///
